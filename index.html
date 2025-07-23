@@ -1,123 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanzibar Tourism</title>
-    <link rel="stylesheet" href="design.css">
-     <link rel="icon"  href="images/login.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zanzibar Tourism</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="Bootstap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+    .hero {
+      background-image: url(images/background.webp);
+      background-size: cover;
+      background-position: center;
+      height: 90vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+    }
+    .card img {
+      height: 200px;
+      object-fit: cover;
+    }
+    footer {
+      background: #343a40;
+      color: white;
+      padding: 20px 0;
+    }
+  </style>
 </head>
-
 <body>
-    <marquee>EXPLORE THE BEAUTY OF ZANZIBAR!!</marquee><br>
-    <header style="height: 55px;">
-    <div class="navbar">
-        <nav>
-        <ul class="nav-links">
-            <li> <a href="index.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">Home</a></li>
-            <li><a href="destination.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">Destination</a></li>
-            <li><a href="activities.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">Activities</a></li>
-            <li><a href="accomodation.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">Hotels & Accomodation</a></li>
-            <li><a href="about.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">About Us</a></li>
-            <li> <a href="contact.html" onmouseover="this.style.color='red';"onmouseout="this.style.color='gold';">Contact</a></li>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Zanzibar Tourism</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="destination.html">Destination</a></li>
+          <li class="nav-item"><a class="nav-link" href="activities.html">Activities</a></li>
+          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accomodation</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
-        </nav>
+      </div>
     </div>
-    </header>
-    <h2>Welcome to Zanzibar</h2>
-    <p>Embark on a journey to Zanzibar, an archipelago renowned for its pristine white-sand beaches, vibrant Swahili
-        culture, and rich historical tapestry. Whether you're seeking relaxation, adventure, or cultural immersion,
-        Zanzibar offers an unforgettable experience.
-    </p>
-    <p>Discover the magic of Stone Town's winding alleys, spice plantations that awaken your senses, breathtaking sunset
-        dhow cruises, and luxurious beachfont resorts. Zanzibar is not just a place, it's an experience of a lifetime,
-        where every moment becomes a cherished memory.
-    </p>
+  </nav>
 
-    <img src="images/welcome.jpeg" width="400px" height="350px" alt="explore the beauty of zanzibar">
-    <section class="attraction">
-    <h3>Top Attractions in Zanzibar</h3>
-        <div class="attraction-text">
-    <li><strong>Stone Town:</strong>Explore the UNESCO World Heritage site filled with winding alleys, spice markets,
-        and centuries-old architecture.
-    </li>
-    <p>It is the the historic heart of Zanzibar City, located on the west coast of Unguja Island. It is a UNESCO World
-        Heritage Site known for its unique blend of Arab, Persian, India, and European influences.
-    </p>
-
-    <p>Stone Town offers a glimpse into Zanzibar's rich history, making it a must-visit for anyone interesed in culture,
-        heritage, and architecture.
-    </p>
-        <div class="attraction">
-    <img src="images/stone_town.jpg" alt="the beauty of stonetown"><br><br>
-        </div>
-        </div>
-        <div class="attraction-text">
-    <li><strong>Nungwi & Kendwa Beaches:</strong>Swim and sunbathe on some of the world’s most breathtaking beaches.
-    </li>
-    <p>Nungwi is one of Zanzibar's most popular beaches, located at the northern tip of the island. It's known for it's
-        crystal-clear waters, white sand, and vibrant nightlife. Unlike other beaches, the tides here are minimal, so
-        you can swim any time of the day.
-    </p>
-    <div class="attraction">
-    <img src="images/Nungwi-Beach-Zanzibar.jpg" alt="Nungwi beach" width="600px" height="500px">
-
-    <p>Kendwa lies just south of Nungwi and offers a more laid-back atmosphere. It's famous for a beautiful sunsets,
-        monthly Full Moon Parties, and calm waters perfect for swimming and snorkeling.</p>
-        <div class="attraction">
-    <img src="images/kendwa-pic.jpg" alt="Kendwa beach" width="650px" height="600px"><br><br>
-        </div>
-        </div>
-        </div>
-        <div class="attraction-text">
-    <li><strong>Jozani Forest:</strong>Meet the rare Red Colobus Monkeys in Zanzibar’s only national park.</li>
-    <p>It is the only national park in Zanzibar and one of the island's most treasured natural attractions.It's located
-        in the central east region of Unguja, the main island of Zanzibar, and covrs about 50 square kilometers.</p>
-    <p>Jozani is the famous for being home to the endangered <strong>Zanzibar Red Colobus Monkey,</strong>.These monkeys
-        are unique for their reddish coat and social behaviour. They are not afraid of people, making them easy to spot
-        during a walk in the forest.</p>
-        <div class=attraction> 
-    <img src="images/jozania.jpeg" alt="Jozani forest"><br><br>
-        </div>
-        </div>
-        <div class="attraction-text">
-    <li><strong>Prison Island: </strong>Take a boat trip to see giant tortoises and learn about the island's historical
-        past.</li>
-    <p>It is a historic island near Zanzibar famous for its 100-year-old giant tortoises and abandoned 19th-century
-        prison. Enjoy snorkeling in crystal-clear waters and relaxing on white sandy beaches. Just a 30-minute boat ride
-        from Stone Town, perfect for a half-day trip.</p>
-        <div class="attraction">
-    <img src="images/prison island.jpg" width="650px" height="600px" alt="prison island"><br><br>
-</div>
-</div>
-            <div class="attraction-text">
-    <li><strong>Spice Tours:</strong> Experience the island’s rich spice heritage on a guided farm tour.​</li>
-    <p>Zanzibar Spice Tours, immerse yourself in fragrant plantations to smell, taste, and learn about cloves, vanilla,
-        cinnamon, and nutmeg. Enjoy fresh coconut treats and watch locals climb palm trees.</p>
-        <div class="attraction">
-    <img src="images/spice_tours.jpg" alt="spice Tours" width="650px" height="600px"><br>
-</div>
-</div>
-    </section>
-    <h3>Plan your visit</h3>
-    <li>Honeymooners</li>
-    <li>Family vacations</li>
-    <li>Adventure seekers</li>
-    <li>Cultural enthusiasts</li>
-
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <h1>Welcome to Zanzibar</h1>
+      <p>Discover the beauty, culture, and adventure of Zanzibar.</p>
+      <a href="#attractions" class="btn btn-primary btn-lg mt-3">Explore Now</a>
     </div>
-        <!-- Footer -->
-    <footer style="
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 50px;">
-        <div class="container">
-            <p>&copy;Zanzibar - Where Paradise Lives.</p>
+  </div>
+
+  <!-- Attractions Section -->
+  <section id="attractions" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Top Attractions</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img src="images/stonetown.jpg" class="card-img-top" alt="Stone Town">
+            <div class="card-body">
+              <h5 class="card-title">Stone Town</h5>
+              <p class="card-text">Explore the rich history and unique architecture of this UNESCO World Heritage site.</p>
+            </div>
+          </div>
         </div>
-    </footer>
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img src="images/nungwi.jpg" class="card-img-top" alt="Nungwi Beach">
+            <div class="card-body">
+              <h5 class="card-title">Nungwi Beach</h5>
+              <p class="card-text">Relax on the white sands and crystal-clear waters of Zanzibar's most famous beach.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm">
+            <img src="images/jozani.jpg" class="card-img-top" alt="Jozani Forest">
+            <div class="card-body">
+              <h5 class="card-title">Jozani Forest</h5>
+              <p class="card-text">Meet the rare Red Colobus monkeys in this lush, green natural forest reserve.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p>&copy; Zanzibar - Where Paradise Lives.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS CDN -->
+  <script src="Bootstap/js/bootstrap.min.js"></script>
 </body>
-
 </html>
