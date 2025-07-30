@@ -80,10 +80,10 @@
         <!-- Contact Form -->
         <div class="col-md-7">
           <h2>Send Us a Message</h2>
-          <form>
+          <form action="submit.php" method="POST">
             <div class="mb-3">
               <label for="name" class="form-label">Your Name</label>
-              <input type="text" class="form-control" id="name" placeholder="Full Name" required />
+              <input type="text" class="form-control" id="fullname" placeholder="fullname" required />
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Your Email</label>
@@ -97,7 +97,7 @@
               <label for="message" class="form-label">Your Message</label>
               <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button  type="submit"  class="btn btn-primary">Send Message</button>
           </form>
         </div>
 
@@ -106,7 +106,7 @@
           <h2>Contact Information</h2>
           <ul class="list-unstyled contact-info mt-4">
             <li class="mb-3"><i class="bi bi-geo-alt-fill"></i> Zanzibar City, Tanzania</li>
-            <li class="mb-3"><i class="bi bi-envelope-fill"></i> shemsa.tours@example.com</li>
+            <li class="mb-3"><i class="bi bi-envelope-fill"></i> shemsa.tours@gmail.com</li>
             <li class="mb-3"><i class="bi bi-telephone-fill"></i> +255 621 214 785</li>
             <li class="mb-3"><i class="bi bi-clock-fill"></i> Mon - Sat: 8:00 AM - 6:00 PM</li>
           </ul>
