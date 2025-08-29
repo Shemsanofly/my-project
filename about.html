@@ -3,61 +3,708 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Us - Shemsa's Zanzibar Tour</title>
+  <title>About Us - Zanzibar Tourism</title>
 
   <!-- Bootstrap CSS -->
   <link href="Bootstap/css/bootstrap.min.css" rel="stylesheet" />
   
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --ocean-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --sunset-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --emerald-gradient: linear-gradient(135deg, #667eea 0%, #4ecdc4 100%);
+      --coral-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      --dark-blue: #1e3a8a;
+      --light-blue: #3b82f6;
+      --coral: #ff6b6b;
+      --turquoise: #4ecdc4;
+      --gold: #ffd700;
+      --white: #ffffff;
+      --light-gray: #f8fafc;
+      --dark-gray: #1f2937;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Custom Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .animate-float { animation: float 4s ease-in-out infinite; }
+
+    /* Navigation */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navbar-custom.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark-gray) !important;
+      transition: all 0.3s ease;
+      position: relative;
+      margin: 0 10px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--ocean-gradient);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--light-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
     .hero {
-      background-image: url(images/about.jpg);
+      height: 70vh;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(59, 130, 246, 0.6) 100%),
+                  url('images/about.jpg');
       background-size: cover;
       background-position: center;
-      height: 60vh;
-      color: white;
+      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-    section h2 {
-      font-weight: bold;
-    }
-    .icon-list li::before {
-      content: "✔️";
-      margin-right: 10px;
-    }
-    footer {
-      background: #343a40;
       color: white;
-      padding: 20px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      background-size: 200% 200%;
+      animation: shimmer 4s infinite;
+    }
+
+    .hero-content {
+      z-index: 2;
+      position: relative;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.8rem;
+      z-index: 1;
+    }
+
+    .floating-1 { top: 15%; left: 8%; animation-delay: 0s; }
+    .floating-2 { top: 70%; right: 12%; animation-delay: 2s; }
+    .floating-3 { top: 40%; left: 5%; animation-delay: 1s; }
+
+    /* Section Styles */
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      color: var(--dark-gray);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 100px;
+      height: 4px;
+      background: var(--ocean-gradient);
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* About Content Cards */
+    .about-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 25px;
+      padding: 3rem;
+      transition: all 0.5s ease;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ocean-gradient);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .about-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .about-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--dark-gray);
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-card p {
+      color: #6b7280;
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-card .icon {
+      font-size: 3rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    /* Icon List Styling */
+    .icon-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .icon-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(79, 172, 254, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .icon-list li::before {
+      content: '✨';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      font-size: 1.2rem;
+      background: var(--sunset-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .icon-list li:hover {
+      transform: translateX(10px);
+      color: var(--light-blue);
+    }
+
+    /* Team Section */
+    .team-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+    }
+
+    .team-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    }
+
+    .team-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 25px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+    }
+
+    .team-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 2rem auto 1.5rem;
+      background: var(--ocean-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: white;
+      box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover .team-avatar {
+      transform: scale(1.1);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.5);
+    }
+
+    .team-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .team-role {
+      color: var(--light-blue);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    /* Call to Action Section */
+    .cta-section {
+      background: var(--sunset-gradient);
+      color: white;
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circles" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="3" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23circles)"/></svg>');
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .btn-cta {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      color: white;
+      padding: 18px 45px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: white;
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn-cta:hover::before {
+      left: 0;
+    }
+
+    .btn-cta:hover {
+      color: var(--dark-gray);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 50px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-gray);
+      color: white;
+      padding: 60px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    }
+
+    .footer-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background: var(--ocean-gradient);
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      margin: 0 15px;
+      line-height: 60px;
+      font-size: 1.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--sunset-gradient);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-links a:hover::before {
+      left: 0;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+    }
+
+     .contact-info {
+      margin: 2rem 0;
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .contact-info i {
+      color: var(--turquoise);
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    .contact-icons a {
+  margin-right: 15px; /* Adjust the spacing as needed */
+  color: #007bff; /* Optional: change icon color */
+  font-size: 24px;  /* Optional: adjust icon size */
+  text-decoration: none;
+}
+
+    /* Values Section */
+    .values-section {
+      background: var(--light-gray);
+    }
+
+    .value-item {
+      text-align: center;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .value-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .value-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--coral-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 15px 30px rgba(255, 154, 158, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .value-item:hover .value-icon {
+      transform: scale(1.1);
+      box-shadow: 0 25px 50px rgba(255, 154, 158, 0.5);
+    }
+
+    .value-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 1rem;
+    }
+
+    .value-text {
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .about-card {
+        padding: 2rem;
+      }
+
+      .floating-element {
+        display: none;
+      }
+
+      .cta-section h2 {
+        font-size: 2.2rem;
+      }
+
+      .cta-section p {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Loading Animation */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--ocean-gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: white;
+    }
+
+    .loader-spinner {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 1.2rem;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Our Story...</p>
+    </div>
+  </div>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Zanzibar Tourism</a>
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-umbrella-beach me-2"></i>
+        Zanzibar Tourism
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav4">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav4">
         <ul class="navbar-nav">
-         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="destination.html">Destination</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="destination.html">Destinations</a></li>
           <li class="nav-item"><a class="nav-link" href="activities.html">Activities</a></li>
-          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accomodation</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accommodation</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
       </div>
@@ -65,68 +712,282 @@
   </nav>
 
   <!-- Hero Section -->
-  <div class="hero mt-5">
+  <section class="hero">
     <div class="container">
-      <h1>About Us</h1>
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+        <h1 class="display-4 fw-bold">About Shemsa's Zanzibar Tour</h1>
+        <p class="lead">Your Gateway to the Wonders of Zanzibar</p>
+      </div>
     </div>
-  </div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-element floating-1 animate-float">
+      <i class="fas fa-heart"></i>
+    </div>
+    <div class="floating-element floating-2 animate-float">
+      <i class="fas fa-globe-africa"></i>
+    </div>
+    <div class="floating-element floating-3 animate-float">
+      <i class="fas fa-users"></i>
+    </div>
+  </section>
 
   <!-- About Content -->
-  <section class="py-5">
+  <section class="section">
     <div class="container">
-      <h2 class="text-center mb-4">Welcome to Shemsa's Zanzibar Tour</h2>
-      <p class="lead text-center">Your Gateway to the Wonders of Zanzibar</p>
-      <p class="text-center mb-5">At Shemsa's Zanzibar Tour Company, we are passionate about showcasing the beauty, culture, and unforgettable experiences that Zanzibar has to offer. From the pristine beaches of Nungwi to the winding alleys of historic Stone Town, our mission is to help you discover the heart and soul of our island paradise.</p>
+      <div class="text-center mb-5" data-aos="fade-up">
+        <h2 class="section-title">Our Story</h2>
+        <p class="lead" style="max-width: 800px; margin: 0 auto; color: #6b7280; font-size: 1.2rem;">
+          At Shemsa's Zanzibar Tour Company, we are passionate about showcasing the beauty, culture, and unforgettable experiences that Zanzibar has to offer. From the pristine beaches of Nungwi to the winding alleys of historic Stone Town, our mission is to help you discover the heart and soul of our island paradise.
+        </p>
+      </div>
 
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <h3>Our Mission</h3>
-          <p>We are dedicated to providing personalized, authentic, and memorable travel experiences in Zanzibar. Whether you are seeking adventure, relaxation, or cultural immersion, we strive to make every journey one to remember.</p>
+      <div class="row g-4">
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="about-card">
+            <i class="fas fa-bullseye icon"></i>
+            <h3>Our Mission</h3>
+            <p>We are dedicated to providing personalized, authentic, and memorable travel experiences in Zanzibar. Whether you are seeking adventure, relaxation, or cultural immersion, we strive to make every journey one to remember.</p>
+          </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <h3>Our Story</h3>
-          <p>Founded by a team of travel enthusiasts and proud Zanzibaris, Shemsa's Zanzibar Tour Company was born from a desire to share the magic of our homeland with the world. With deep local roots and a love for storytelling, we bring you closer to the people, places, and stories that make Zanzibar truly unique.</p>
+        
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="about-card">
+            <i class="fas fa-book-open icon"></i>
+            <h3>Our Story</h3>
+            <p>Founded by a team of travel enthusiasts and proud Zanzibaris, Shemsa's Zanzibar Tour Company was born from a desire to share the magic of our homeland with the world. With deep local roots and a love for storytelling, we bring you closer to the people, places, and stories that make Zanzibar truly unique.</p>
+          </div>
         </div>
       </div>
 
-      <div class="row mt-4">
-        <div class="col-md-6 mb-4">
-          <h3>What We Offer</h3>
-          <ul class="list-unstyled icon-list">
-            <li>Guided tours to top attractions and hidden gems</li>
-            <li>Beach resort and hotel bookings</li>
-            <li>Cultural and culinary experiences</li>
-            <li>Transportation and personalized travel packages</li>
-            <li>Easy and secure online booking system</li>
-          </ul>
+      <div class="row g-4 mt-4">
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="about-card">
+            <i class="fas fa-gift icon"></i>
+            <h3>What We Offer</h3>
+            <ul class="icon-list">
+              <li>Guided tours to top attractions and hidden gems</li>
+              <li>Beach resort and hotel bookings</li>
+              <li>Cultural and culinary experiences</li>
+              <li>Transportation and personalized travel packages</li>
+              <li>Easy and secure online booking system</li>
+            </ul>
+          </div>
         </div>
-        <div class="col-md-6 mb-4">
-          <h3>Why Choose Us</h3>
-          <ul class="list-unstyled icon-list">
-            <li>Local knowledge and trusted guides</li>
-            <li>Tailor-made experiences for every traveler</li>
-            <li>Transparent pricing and excellent customer services</li>
-            <li>Eco-conscious and culturally respectful tours</li>
-          </ul>
+        
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="about-card">
+            <i class="fas fa-star icon"></i>
+            <h3>Why Choose Us</h3>
+            <ul class="icon-list">
+              <li>Local knowledge and trusted guides</li>
+              <li>Tailor-made experiences for every traveler</li>
+              <li>Transparent pricing and excellent customer service</li>
+              <li>Eco-conscious and culturally respectful tours</li>
+              <li>25+ years of experience in tourism</li>
+            </ul>
+          </div>
         </div>
-      </div>
-
-      <div class="text-center mt-5">
-        <h3>Join Us in Exploring Zanzibar</h3>
-        <p>Let us be your trusted guide as you explore the spice-scented markets, turquoise waters, and rich heritage of Zanzibar. We're here to help you create memories that will last a lifetime.</p>
-        <a href="contact.html" class="btn btn-primary mt-3">Contact Us</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Values Section -->
+  <section class="section values-section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Our Values</h2>
+      
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h4 class="value-title">Sustainability</h4>
+            <p class="value-text">We are committed to protecting Zanzibar's natural beauty and supporting local communities through responsible tourism practices.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h4 class="value-title">Authenticity</h4>
+            <p class="value-text">We provide genuine cultural experiences that connect you with the real Zanzibar, its people, and their traditions.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-award"></i>
+            </div>
+            <h4 class="value-title">Excellence</h4>
+            <p class="value-text">We maintain the highest standards in service quality, safety, and customer satisfaction to ensure your perfect vacation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section team-section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Meet Our Team</h2>
+      
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="team-card">
+            <div class="team-avatar">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <h4 class="team-name">Shemsa Amin</h4>
+            <p class="team-role">Founder & CEO</p>
+            <p class="px-3 pb-3" style="color: #6b7280;">Passionate about sharing Zanzibar's beauty with the world. 5+ years in tourism industry.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="team-card">
+            <div class="team-avatar">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h4 class="team-name">Local Expert Guides</h4>
+            <p class="team-role">Tour Specialists</p>
+            <p class="px-3 pb-3" style="color: #6b7280;">Our certified local guides bring Zanzibar's stories to life with their deep knowledge and passion.</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="team-card">
+            <div class="team-avatar">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h4 class="team-name">Customer Support</h4>
+            <p class="team-role">24/7 Service Team</p>
+            <p class="px-3 pb-3" style="color: #6b7280;">Dedicated support team ensuring your trip runs smoothly from booking to departure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container text-center">
+      <div class="cta-content" data-aos="fade-up">
+        <h2 class="mb-4">Ready to Start Your Journey?</h2>
+        <p class="lead mb-4">Let us be your trusted guide as you explore the spice-scented markets, turquoise waters, and rich heritage of Zanzibar</p>
+        <a href="contact.html" class="btn btn-cta">
+          <i class="fas fa-envelope me-2"></i>
+          Contact Us Today
+        </a>
+      </div>
+    </div>
+  </section>
+ <!-- Footer -->
   <footer class="text-center">
     <div class="container">
-      <p>&copy; Zanzibar - Where Paradise Lives.</p>
+      <div class="footer-content">
+        <h3 class="footer-brand mb-3">
+          <i class="fas fa-umbrella-beach me-2"></i>
+          Zanzibar Tourism
+        </h3>
+        <p class="mb-4" style="font-size: 1.1rem; opacity: 0.9;">Where Paradise Lives - Experience the magic of Zanzibar</p>
+        
+         <div class="social-links">
+  <a href="https://facebook.com/yourusername" target="_blank" rel="noopener" title="Facebook">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" title="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://twitter.com/yourusername" target="_blank" rel="noopener" title="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener" title="YouTube">
+    <i class="fab fa-youtube"></i>
+  </a>
+        </div>
+      <div class="contact-icons" style="font-size: 24px;">
+  <a href="https://www.google.com/maps/place/Stone+Town,+Zanzibar" target="_blank" rel="noopener" title="Location" class="contact-icon">
+    <i class="fas fa-map-marker-alt"></i>
+    </a>
+ <a href="tel:+255 621 214 785" target="_blank" rel="noopener" title="Call" class="contact-icon">
+    <i class="fas fa-phone"></i>
+  </a>
+  <a href="https://wa.me/255621214785" target="_blank" rel="noopener" title="WhatsApp" class="contact-icon">
+<i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="mailto:info@zanzibartourism.com" title="Email">
+    <i class="fas fa-envelope"></i>
+  </a>
+</div>
+        <hr style="border-color: #374151; margin: 2rem 0;">
+        <p class="mb-0" style="opacity: 0.8;">&copy; 2025 Zanzibar Tourism - Where Paradise Lives. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <!-- Bootstrap JS -->
   <script src="Bootstap/js/bootstrap.min.js"></script>
+  
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+
+    // Page Loader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('pageLoader').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('pageLoader').style.display = 'none';
+        }, 500);
+      }, 1500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero && window.innerWidth > 768) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+  </script>
 </body>
 </html>

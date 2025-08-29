@@ -3,114 +3,898 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact Us - Shemsa's Zanzibar Tour</title>
+  <title>Contact Us - Zanzibar Tourism</title>
 
   <!-- Bootstrap CSS -->
   <link href="Bootstap/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
- 
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --ocean-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --sunset-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --emerald-gradient: linear-gradient(135deg, #667eea 0%, #4ecdc4 100%);
+      --coral-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      --dark-blue: #1e3a8a;
+      --light-blue: #3b82f6;
+      --coral: #ff6b6b;
+      --turquoise: #4ecdc4;
+      --gold: #ffd700;
+      --white: #ffffff;
+      --light-gray: #f8fafc;
+      --dark-gray: #1f2937;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Custom Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .animate-float { animation: float 4s ease-in-out infinite; }
+
+    /* Navigation */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navbar-custom.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark-gray) !important;
+      transition: all 0.3s ease;
+      position: relative;
+      margin: 0 10px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--ocean-gradient);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--light-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
     .hero {
-      background-image: url('images/contact.jpg');
+      height: 70vh;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(59, 130, 246, 0.6) 100%),
+                  url('images/contact.jpg');
       background-size: cover;
       background-position: center;
-      height: 50vh;
-      color: white;
+      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      background-size: 200% 200%;
+      animation: shimmer 4s infinite;
+    }
+
+    .hero-content {
+      z-index: 2;
+      position: relative;
+      max-width: 800px;
     }
 
     .hero h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
     }
 
-    footer {
-      background: #343a40;
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.8rem;
+      z-index: 1;
+    }
+
+    .floating-1 { top: 15%; left: 8%; animation-delay: 0s; }
+    .floating-2 { top: 70%; right: 12%; animation-delay: 2s; }
+    .floating-3 { top: 40%; left: 5%; animation-delay: 1s; }
+
+    /* Section Styles */
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      color: var(--dark-gray);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 100px;
+      height: 4px;
+      background: var(--ocean-gradient);
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 3rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ocean-gradient);
+      opacity: 0.02;
+      z-index: 1;
+    }
+
+    .contact-form > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-floating {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+      border: 2px solid #e5e7eb;
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control:focus {
+      border-color: var(--light-blue);
+      box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-submit {
+      background: var(--sunset-gradient);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.4s ease;
+      box-shadow: 0 15px 35px rgba(250, 112, 154, 0.4);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 100%;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: all 0.6s ease;
+    }
+
+    .btn-submit:hover::before {
+      left: 100%;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(250, 112, 154, 0.6);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* Contact Info Cards */
+    .contact-info-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 25px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.5s ease;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--emerald-gradient);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .contact-info-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .contact-info-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--ocean-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
       color: white;
-      padding: 20px 0;
+      box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-info-card:hover .contact-icon {
+      transform: scale(1.1);
+      box-shadow: 0 25px 50px rgba(79, 172, 254, 0.5);
+    }
+
+    .contact-info-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-info-card p {
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-info-card a {
+      color: var(--light-blue);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .contact-info-card a:hover {
+      color: var(--coral);
+      transform: scale(1.05);
+    }
+
+    /* Form Validation Styles */
+    .form-control.is-valid {
+      border-color: #22c55e;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2322c55e' d='m2.3 6.73.94-.94 2.94 2.94L7.83 7.09 8.77 8.03 5.24 11.56z'/%3e%3c/svg%3e");
+    }
+
+    .form-control.is-invalid {
+      border-color: #ef4444;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23ef4444'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.5 5.5 1 1m0-1-1 1'/%3e%3c/svg%3e");
+    }
+
+    .invalid-feedback {
+      display: block;
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    .valid-feedback {
+      display: block;
+      color: #22c55e;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Success Message */
+    .success-message {
+      background: var(--emerald-gradient);
+      color: white;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 15px 35px rgba(78, 205, 196, 0.4);
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Map Section */
+    .map-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+    }
+
+    .map-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    }
+
+    .map-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .map-placeholder {
+      height: 400px;
+      background: var(--ocean-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="map-pattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23map-pattern)"/></svg>');
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-gray);
+      color: white;
+      padding: 60px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    }
+
+    .footer-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background: var(--ocean-gradient);
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      margin: 0 15px;
+      line-height: 60px;
+      font-size: 1.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--sunset-gradient);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-links a:hover::before {
+      left: 0;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .footer-contact-info {
+      margin: 2rem 0;
+    }
+
+    .footer-contact-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .footer-contact-info i {
+      color: var(--turquoise);
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .contact-info {
+      margin: 2rem 0;
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
 
     .contact-info i {
-      font-size: 1.5rem;
-      color: #0d6efd;
+      color: var(--turquoise);
       margin-right: 10px;
+      width: 20px;
     }
-    
+
+       .contact-icons a {
+  margin-right: 15px; /* Adjust the spacing as needed */
+  color: #007bff; /* Optional: change icon color */
+  font-size: 24px;  /* Optional: adjust icon size */
+  text-decoration: none;
+}
+
+      .floating-element {
+        display: none;
+      }
+    }
+
+    /* Loading Animation */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--ocean-gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: white;
+    }
+
+    .loader-spinner {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+
+    .loader-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Contact...</p>
+    </div>
+  </div>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Zanzibar Tourism</a>
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-umbrella-beach me-2"></i>
+        Zanzibar Tourism
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav5">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav5">
         <ul class="navbar-nav">
-         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="destination.html">Destination</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="destination.html">Destinations</a></li>
           <li class="nav-item"><a class="nav-link" href="activities.html">Activities</a></li>
-          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accomodation</a></li>
+          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accommodation</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <div class="hero mt-5">
+  <section class="hero">
     <div class="container">
-      <h1>Contact Us</h1>
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+        <h1 class="display-4 fw-bold">Contact Us</h1>
+        <p class="lead">Get in touch and let us plan your perfect Zanzibar adventure</p>
+      </div>
     </div>
-  </div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-element floating-1 animate-float">
+      <i class="fas fa-envelope"></i>
+    </div>
+    <div class="floating-element floating-2 animate-float">
+      <i class="fas fa-phone"></i>
+    </div>
+    <div class="floating-element floating-3 animate-float">
+      <i class="fas fa-map-marker-alt"></i>
+    </div>
+  </section>
 
   <!-- Contact Section -->
-  <section class="py-5">
+  <section class="section">
     <div class="container">
       <div class="row g-5">
         <!-- Contact Form -->
-        <div class="col-md-7">
-          <h2>Send Us a Message</h2>
-          <form action="submit.php" method="POST">
-            <div class="mb-3">
-              <label for="name" class="form-label">Your Name</label>
-              <input type="text" class="form-control" id="fullname" placeholder="fullname" required />
+        <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+          <div class="contact-form">
+            <h2 class="mb-4" style="font-family: 'Playfair Display', serif; color: var(--dark-gray);">
+              <i class="fas fa-paper-plane me-3" style="color: var(--coral);"></i>
+              Send Us a Message
+            </h2>
+            
+            <div class="success-message" id="successMessage">
+              <i class="fas fa-check-circle fa-2x mb-3"></i>
+              <h4>Message Sent Successfully!</h4>
+              <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Your Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" required />
-            </div>
-            <div class="mb-3">
-              <label for="subject" class="form-label">Subject</label>
-              <input type="text" class="form-control" id="subject" placeholder="Booking inquiry, tour question..." />
-            </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">Your Message</label>
-              <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..." required></textarea>
-            </div>
-            <button  type="submit"  class="btn btn-primary">Send Message</button>
-          </form>
+
+            <form id="contactForm" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" required>
+                    <label for="fullname">Full Name *</label>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                    <label for="email">Email Address *</label>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+                    <label for="phone">Phone Number</label>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating mb-3">
+                    <select class="form-control" id="subject" required>
+                      <option value="">Choose a subject</option>
+                      <option value="booking">Booking Inquiry</option>
+                      <option value="tour">Tour Information</option>
+                      <option value="accommodation">Accommodation</option>
+                      <option value="activities">Activities</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <label for="subject">Subject *</label>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-floating mb-4">
+                <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px;" required></textarea>
+                <label for="message">Your Message *</label>
+                <div class="invalid-feedback"></div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+              
+              <button type="submit" class="btn btn-submit" id="submitBtn">
+                <span class="btn-text">
+                  <i class="fas fa-paper-plane me-2"></i>
+                  Send Message
+                </span>
+                <span class="btn-loading" style="display: none;">
+                  <span class="spinner"></span>
+                  Sending...
+                </span>
+              </button>
+            </form>
+          </div>
         </div>
 
         <!-- Contact Info -->
-        <div class="col-md-5">
-          <h2>Contact Information</h2>
-         <p><i class="bi bi-envelope-fill"></i> <a href="mailto:aminshemsa@gmail.com">aminshemsa@gmail.com</a></p>
-        <p><i class="bi bi-telephone-fill"></i> <a href="tel:+255 621 214 785">+255 621 214 785</a></p>
-        <p><i class="bi bi-whatsapp"></i> <a href="https://wa.me/+255 621 214 785" target="_blank" rel="noopener">WhatsApp Chat</a></p>
-        <p><i class="bi bi-instagram"></i> <a href="https://instagram.com/super_girl_.08">@super_girl_.08"</a></p>
-        <p><i class="bi bi-geo-alt-fill"></i> Zanzibar Island, Tanzania</p>
+        <div class="col-lg-5">
+          <div class="row g-4">
+            <div class="col-12" data-aos="fade-up" data-aos-delay="200">
+              <div class="contact-info-card">
+                <div class="contact-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <h4>Email Us</h4>
+                <p><a href="mailto:aminshemsa@gmail.com">aminshemsa@gmail.com</a></p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">We respond within 24 hours</p>
+              </div>
+            </div>
+            
+            <div class="col-12" data-aos="fade-up" data-aos-delay="300">
+              <div class="contact-info-card">
+                <div class="contact-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <h4>Call Us</h4>
+                <p><a href="tel:+255621214785">+255 621 214 785</a></p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Available 24/7 for emergencies</p>
+              </div>
+            </div>
+            
+            <div class="col-12" data-aos="fade-up" data-aos-delay="400">
+              <div class="contact-info-card">
+                <div class="contact-icon">
+                  <i class="fab fa-whatsapp"></i>
+                </div>
+                <h4>WhatsApp</h4>
+                <p><a href="https://wa.me/255621214785" target="_blank" rel="noopener">Chat with us instantly</a></p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Quick responses guaranteed</p>
+              </div>
+            </div>
+            
+            <div class="col-12" data-aos="fade-up" data-aos-delay="500">
+              <div class="contact-info-card">
+                <div class="contact-icon">
+                  <i class="fab fa-instagram"></i>
+                </div>
+                <h4>Follow Us</h4>
+                <p><a href="https://instagram.com/super_girl_.08" target="_blank" rel="noopener">@super_girl_.08</a></p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">See our latest adventures</p>
+              </div>
+            </div>
+            
+            <div class="col-12" data-aos="fade-up" data-aos-delay="600">
+              <div class="contact-info-card">
+                <div class="contact-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h4>Visit Us</h4>
+                <p>Stone Town, Zanzibar Island</p>
+                <p>Tanzania, East Africa</p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Office hours: 8AM - 6PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="section map-section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Find Us</h2>
+      <div class="map-container" data-aos="zoom-in">
+        <div class="map-placeholder">
+          <div class="text-center">
+            <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
+            <h4>Stone Town, Zanzibar</h4>
+            <p>Interactive map coming soon</p>
+          </div>
         </div>
       </div>
     </div>
@@ -119,12 +903,235 @@
   <!-- Footer -->
   <footer class="text-center">
     <div class="container">
-      <p>&copy; Zanzibar - Where Paradise Lives.</p>
+      <div class="footer-content">
+        <h3 class="footer-brand mb-3">
+          <i class="fas fa-umbrella-beach me-2"></i>
+          Zanzibar Tourism
+        </h3>
+        <p class="mb-4" style="font-size: 1.1rem; opacity: 0.9;">Where Paradise Lives - Experience the magic of Zanzibar</p>
+        
+         <div class="social-links">
+  <a href="https://facebook.com/yourusername" target="_blank" rel="noopener" title="Facebook">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" title="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://twitter.com/yourusername" target="_blank" rel="noopener" title="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener" title="YouTube">
+    <i class="fab fa-youtube"></i>
+  </a>
+        </div>
+   
+        <hr style="border-color: #374151; margin: 2rem 0;">
+        <p class="mb-0" style="opacity: 0.8;">&copy; 2025 Zanzibar Tourism - Where Paradise Lives. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
-  <!-- Bootstrap & Bootstrap Icons JS -->
+  <!-- Bootstrap JS -->
   <script src="Bootstap/js/bootstrap.min.js"></script>
- 
+  
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+
+    // Page Loader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('pageLoader').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('pageLoader').style.display = 'none';
+        }, 500);
+      }, 1500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Form Validation
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMessage = document.getElementById('successMessage');
+
+    // Validation patterns
+    const patterns = {
+      name: /^[a-zA-Z\s]{2,50}$/,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      phone: /^[\+]?[0-9\s\-\(\)]{10,15}$/
+    };
+
+    // Validation messages
+    const messages = {
+      name: 'Please enter a valid name (2-50 characters, letters only)',
+      email: 'Please enter a valid email address',
+      phone: 'Please enter a valid phone number',
+      subject: 'Please select a subject',
+      message: 'Please enter your message (minimum 10 characters)'
+    };
+
+    // Real-time validation
+    function validateField(field) {
+      const value = field.value.trim();
+      const fieldName = field.id;
+      let isValid = true;
+      let message = '';
+
+      // Check if required field is empty
+      if (field.hasAttribute('required') && !value) {
+        isValid = false;
+        message = `${field.labels[0].textContent.replace(' *', '')} is required`;
+      } else if (value) {
+        // Validate specific fields
+        switch (fieldName) {
+          case 'fullname':
+            if (!patterns.name.test(value)) {
+              isValid = false;
+              message = messages.name;
+            }
+            break;
+          case 'email':
+            if (!patterns.email.test(value)) {
+              isValid = false;
+              message = messages.email;
+            }
+            break;
+          case 'phone':
+            if (value && !patterns.phone.test(value)) {
+              isValid = false;
+              message = messages.phone;
+            }
+            break;
+          case 'message':
+            if (value.length < 10) {
+              isValid = false;
+              message = messages.message;
+            }
+            break;
+        }
+      }
+
+      // Update field appearance
+      field.classList.remove('is-valid', 'is-invalid');
+      const feedback = field.parentNode.querySelector('.invalid-feedback');
+      
+      if (!isValid) {
+        field.classList.add('is-invalid');
+        if (feedback) feedback.textContent = message;
+      } else if (value) {
+        field.classList.add('is-valid');
+      }
+
+      return isValid;
+    }
+
+    // Add event listeners for real-time validation
+    ['fullname', 'email', 'phone', 'subject', 'message'].forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+          // Clear validation on input
+          if (field.classList.contains('is-invalid')) {
+            setTimeout(() => validateField(field), 500);
+          }
+        });
+      }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate all fields
+      const fields = form.querySelectorAll('input[required], select[required], textarea[required]');
+      let isFormValid = true;
+      
+      fields.forEach(field => {
+        if (!validateField(field)) {
+          isFormValid = false;
+        }
+      });
+
+      if (isFormValid) {
+        // Show loading state
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-flex';
+        submitBtn.disabled = true;
+
+        // Simulate form submission
+        setTimeout(() => {
+          // Hide loading state
+          btnText.style.display = 'inline-flex';
+          btnLoading.style.display = 'none';
+          submitBtn.disabled = false;
+
+          // Show success message
+          successMessage.classList.add('show');
+          form.reset();
+          
+          // Clear validation classes
+          fields.forEach(field => {
+            field.classList.remove('is-valid', 'is-invalid');
+          });
+
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            successMessage.classList.remove('show');
+          }, 5000);
+        }, 2000);
+      } else {
+        // Focus on first invalid field
+        const firstInvalid = form.querySelector('.is-invalid');
+        if (firstInvalid) {
+          firstInvalid.focus();
+        }
+      }
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero && window.innerWidth > 768) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+  </script>
 </body>
 </html>

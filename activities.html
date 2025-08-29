@@ -1,62 +1,710 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zanzibar Activities</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zanzibar Activities - Adventure Awaits</title>
 
   <!-- Bootstrap CSS -->
-  <link href="Bootstap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="Bootstap/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --ocean-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --sunset-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --emerald-gradient: linear-gradient(135deg, #667eea 0%, #4ecdc4 100%);
+      --adventure-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      --dark-blue: #1e3a8a;
+      --light-blue: #3b82f6;
+      --coral: #ff6b6b;
+      --turquoise: #4ecdc4;
+      --gold: #ffd700;
+      --white: #ffffff;
+      --light-gray: #f8fafc;
+      --dark-gray: #1f2937;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Custom Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .animate-float { animation: float 4s ease-in-out infinite; }
+
+    /* Navigation */
+    .navbar-custom {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navbar-custom.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark-gray) !important;
+      transition: all 0.3s ease;
+      position: relative;
+      margin: 0 10px;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: var(--ocean-gradient);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--light-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
     .hero {
-      background-image: url('https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa');
+      height: 70vh;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(59, 130, 246, 0.6) 100%),
+                  url('https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa');
       background-size: cover;
       background-position: center;
-      height: 60vh;
-      color: white;
+      background-attachment: fixed;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      background-size: 200% 200%;
+      animation: shimmer 4s infinite;
+    }
+
+    .hero-content {
+      z-index: 2;
+      position: relative;
+      max-width: 800px;
     }
 
     .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.8rem;
+      z-index: 1;
+    }
+
+    .floating-1 { top: 15%; left: 8%; animation-delay: 0s; }
+    .floating-2 { top: 70%; right: 12%; animation-delay: 2s; }
+    .floating-3 { top: 40%; left: 5%; animation-delay: 1s; }
+
+    /* Filter Section */
+    .filter-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 60px 0;
+      position: relative;
+    }
+
+    .filter-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(59,130,246,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    }
+
+    .filter-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid transparent;
+      padding: 12px 30px;
+      margin: 8px;
+      border-radius: 30px;
+      transition: all 0.4s ease;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--ocean-gradient);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .filter-btn:hover::before,
+    .filter-btn.active::before {
+      left: 0;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
       font-size: 3.5rem;
-      font-weight: bold;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      color: var(--dark-gray);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 100px;
+      height: 4px;
+      background: var(--ocean-gradient);
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Activity Cards */
+    .activity-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: none;
+      border-radius: 25px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      height: 100%;
+      position: relative;
+    }
+
+    .activity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--ocean-gradient);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .activity-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-20px) scale(1.03);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.2);
     }
 
     .activity-card img {
-      height: 200px;
+      height: 280px;
       object-fit: cover;
+      transition: all 0.5s ease;
     }
 
-    footer {
-      background: #343a40;
+    .activity-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .card-body {
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--dark-gray);
+    }
+
+    .card-text {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .activity-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--sunset-gradient);
       color: white;
-      padding: 20px 0;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 3;
+      box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+    }
+
+    .price-tag {
+      background: var(--emerald-gradient);
+      color: white;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .price-tag:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(78, 205, 196, 0.6);
+    }
+
+    .duration-badge {
+      background: var(--adventure-gradient);
+      color: var(--dark-gray);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    /* Video Section */
+    .video-section {
+      background: var(--ocean-gradient);
+      padding: 80px 0;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0,50 Q25,30 50,50 T100,50 V100 H0 Z" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>');
+    }
+
+    .video-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+
+    .video-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Call to Action Section */
+    .cta-section {
+      background: var(--sunset-gradient);
+      color: white;
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circles" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="3" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23circles)"/></svg>');
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .btn-cta {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      color: white;
+      padding: 18px 45px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: white;
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn-cta:hover::before {
+      left: 0;
+    }
+
+    .btn-cta:hover {
+      color: var(--dark-gray);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 50px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-gray);
+      color: white;
+      padding: 60px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    }
+
+    .footer-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--ocean-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-links {
+      margin: 2rem 0;
+    }
+
+    .social-links a {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background: var(--ocean-gradient);
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      margin: 0 15px;
+      line-height: 60px;
+      font-size: 1.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--sunset-gradient);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-links a:hover::before {
+      left: 0;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .contact-info {
+      margin: 2rem 0;
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .contact-info i {
+      color: var(--turquoise);
+      margin-right: 10px;
+      width: 20px;
+    }
+
+    .contact-icons a {
+  margin-right: 15px; /* Adjust the spacing as needed */
+  color: #007bff; /* Optional: change icon color */
+  font-size: 24px;  /* Optional: adjust icon size */
+  text-decoration: none;
+}
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .card-body {
+        padding: 2rem;
+      }
+
+      .floating-element {
+        display: none;
+      }
+
+      .cta-section h2 {
+        font-size: 2.2rem;
+      }
+
+      .cta-section p {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Loading Animation */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--ocean-gradient);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: white;
+    }
+
+    .loader-spinner {
+      width: 80px;
+      height: 80px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 1.2rem;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Adventures...</p>
+    </div>
+  </div>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Zanzibar Tourism</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav3">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-umbrella-beach me-2"></i>
+        Zanzibar Tourism
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav3">
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="destination.html">Destination</a></li>
-          <li class="nav-item"><a class="nav-link" href="activities.html">Activities</a></li>
-          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accomodation</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="destination.html">Destinations</a></li>
+          <li class="nav-item"><a class="nav-link active" href="activities.html">Activities</a></li>
+          <li class="nav-item"><a class="nav-link" href="accomodation.html">Accommodation</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
@@ -65,100 +713,340 @@
   </nav>
 
   <!-- Hero Section -->
-  <div class="hero mt-5">
+  <section class="hero">
     <div class="container">
-      <h1>Exciting Activities</h1>
-      <p>Make unforgettable memories in Zanzibar with these thrilling experiences.</p>
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+        <h1 class="display-4 fw-bold">Exciting Activities</h1>
+        <p class="lead">Make unforgettable memories in Zanzibar with these thrilling experiences</p>
+      </div>
     </div>
-  </div>
+    
+    <!-- Floating Elements -->
+    <div class="floating-element floating-1 animate-float">
+      <i class="fas fa-swimmer"></i>
+    </div>
+    <div class="floating-element floating-2 animate-float">
+      <i class="fas fa-ship"></i>
+    </div>
+    <div class="floating-element floating-3 animate-float">
+      <i class="fas fa-mountain"></i>
+    </div>
+  </section>
 
-  <!-- Activities Section -->
-  <section class="py-5">
+  <!-- Filter Section -->
+  <section class="filter-section">
     <div class="container">
-      <div class="row g-4">
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/snorkeling-diving" class="card-img-top" alt="Snorkeling">
-            <div class="card-body">
-              <h5 class="card-title">Snorkeling & Diving</h5>
-              <p class="card-text">Explore colorful coral reefs and marine life around Mnemba Atoll and other dive spots.</p>
-            </div>
-          </div>
+      <div class="text-center" data-aos="fade-up">
+        <h3 class="mb-4">Filter by Activity Type</h3>
+        <div class="filter-buttons">
+          <button class="btn filter-btn active" data-filter="all">All Activities</button>
+          <button class="btn filter-btn" data-filter="water">Water Sports</button>
+          <button class="btn filter-btn" data-filter="cultural">Cultural</button>
+          <button class="btn filter-btn" data-filter="nature">Nature</button>
+          <button class="btn filter-btn" data-filter="adventure">Adventure</button>
         </div>
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/spice-tour.jpg" class="card-img-top" alt="Spice Tour">
-            <div class="card-body">
-              <h5 class="card-title">Spice Farm Tour</h5>
-              <p class="card-text">Visit Zanzibar’s famous spice farms and learn about cloves, cinnamon, vanilla, and more.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/sunset.jpg" class="card-img-top" alt="Dhow Cruise">
-            <div class="card-body">
-              <h5 class="card-title">Dhow Sunset Cruise</h5>
-              <p class="card-text">Enjoy a romantic sail on a traditional dhow boat while watching the sunset over the ocean.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/walk.jpg" class="card-img-top" alt="Jozani Forest">
-            <div class="card-body">
-              <h5 class="card-title">Nature Walks</h5>
-              <p class="card-text">Walk through Jozani Forest and encounter Red Colobus monkeys and other wildlife.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/Kitesurfing.jpg" class="card-img-top" alt="Kitesurfing">
-            <div class="card-body">
-              <h5 class="card-title">Kitesurfing</h5>
-              <p class="card-text">Try thrilling water sports like kitesurfing at Paje and Jambiani beaches.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="card activity-card shadow-sm">
-            <img src="images/cultural.jpg" class="card-img-top" alt="Cultural Tour">
-            <div class="card-body">
-              <h5 class="card-title">Cultural & City Tours</h5>
-              <p class="card-text">Explore Stone Town’s rich history, local markets, and architecture with a local guide.</p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
-  
-<p>With so many things to do, Zanzibar promises unforgettable memories, whether you're an explorer, a beach lover, or a cultural enthusiast.</p>
-<p>Your dream trip starts here <a href="https://youtube.com/shorts/MHsXuNwyruM?si=7Xz5x-TpxCfLzxjc">Watch Now</a></p>
-   
 
-  <!-- Footer -->
+  <!-- Activities Grid -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Adventure Activities</h2>
+      
+      <div class="row g-4" id="activitiesGrid">
+        <div class="col-lg-4 col-md-6 activity-item" data-category="water adventure" data-aos="fade-up" data-aos-delay="100">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Popular</div>
+            <img src="images/snorkeling-diving.jpg" class="card-img-top" alt="Snorkeling & Diving">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                Half Day
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-mask-snorkel me-2" style="color: var(--turquoise);"></i>
+                Snorkeling & Diving
+              </h5>
+              <p class="card-text">Explore colorful coral reefs and marine life around Mnemba Atoll and other pristine dive spots with crystal-clear waters.</p>
+              <div class="price-tag">From $55/person</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 activity-item" data-category="cultural nature" data-aos="fade-up" data-aos-delay="200">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Authentic</div>
+            <img src="images/spice-tour.jpg" class="card-img-top" alt="Spice Farm Tour">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                3-4 Hours
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-seedling me-2" style="color: #22c55e;"></i>
+                Spice Farm Tour
+              </h5>
+              <p class="card-text">Visit Zanzibar's famous spice farms and learn about cloves, cinnamon, vanilla, and more. Taste fresh tropical fruits.</p>
+              <div class="price-tag">From $35/person</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 activity-item" data-category="water cultural" data-aos="fade-up" data-aos-delay="300">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Romantic</div>
+            <img src="images/sunset.jpg" class="card-img-top" alt="Dhow Sunset Cruise">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                2-3 Hours
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-sailboat me-2" style="color: var(--gold);"></i>
+                Dhow Sunset Cruise
+              </h5>
+              <p class="card-text">Enjoy a romantic sail on a traditional dhow boat while watching the magnificent sunset over the Indian Ocean.</p>
+              <div class="price-tag">From $45/person</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 activity-item" data-category="nature adventure" data-aos="fade-up" data-aos-delay="400">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Wildlife</div>
+            <img src="images/walk.jpg" class="card-img-top" alt="Nature Walks">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                2-3 Hours
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-tree me-2" style="color: #22c55e;"></i>
+                Jozani Forest Walks
+              </h5>
+              <p class="card-text">Walk through Jozani Forest and encounter rare Red Colobus monkeys and other exotic wildlife in their natural habitat.</p>
+              <div class="price-tag">From $30/person</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 activity-item" data-category="water adventure" data-aos="fade-up" data-aos-delay="500">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Thrilling</div>
+            <img src="images/Kitesurfing.jpg" class="card-img-top" alt="Kitesurfing">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                Full Day
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-wind me-2" style="color: var(--coral);"></i>
+                Kitesurfing Lessons
+              </h5>
+              <p class="card-text">Try thrilling water sports like kitesurfing at Paje and Jambiani beaches with professional instructors and equipment.</p>
+              <div class="price-tag">From $85/person</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 activity-item" data-category="cultural adventure" data-aos="fade-up" data-aos-delay="600">
+          <div class="card activity-card h-100">
+            <div class="activity-badge">Heritage</div>
+            <img src="images/cultural.jpg" class="card-img-top" alt="Cultural Tour">
+            <div class="card-body">
+              <div class="duration-badge">
+                <i class="fas fa-clock me-1"></i>
+                4-5 Hours
+              </div>
+              <h5 class="card-title">
+                <i class="fas fa-mosque me-2" style="color: var(--gold);"></i>
+                Stone Town Cultural Tours
+              </h5>
+              <p class="card-text">Explore Stone Town's rich history, local markets, and unique architecture with experienced local guides.</p>
+              <div class="price-tag">From $40/person</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <div class="container">
+      <div class="video-content text-center mb-5" data-aos="fade-up">
+        <h2 class="mb-4" style="font-family: 'Playfair Display', serif; font-size: 3rem;">Experience Zanzibar</h2>
+        <p class="lead mb-5">Watch this amazing video to see what awaits you in paradise</p>
+      </div>
+      <div class="video-container" data-aos="zoom-in">
+        <iframe src="https://www.youtube.com/embed/MHsXuNwyruM" allowfullscreen></iframe>
+      </div>
+      <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="200">
+        <p class="lead">With so many things to do, Zanzibar promises unforgettable memories, whether you're an explorer, a beach lover, or a cultural enthusiast.</p>
+        <p class="mb-0">Your dream trip starts here!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="container text-center">
+      <div class="cta-content" data-aos="fade-up">
+        <h2 class="mb-4">Ready for Your Adventure?</h2>
+        <p class="lead mb-4">Book your exciting Zanzibar activities today and create memories that will last a lifetime</p>
+        <a href="contact.html" class="btn btn-cta">
+          <i class="fas fa-calendar-alt me-2"></i>
+          Book Activities Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+ <!-- Footer -->
   <footer class="text-center">
     <div class="container">
-      <p>&copy;  Zanzibar - Where Paradise Lives.</p>
+      <div class="footer-content">
+        <h3 class="footer-brand mb-3">
+          <i class="fas fa-umbrella-beach me-2"></i>
+          Zanzibar Tourism
+        </h3>
+        <p class="mb-4" style="font-size: 1.1rem; opacity: 0.9;">Where Paradise Lives - Experience the magic of Zanzibar</p>
+        
+         <div class="social-links">
+  <a href="https://facebook.com/yourusername" target="_blank" rel="noopener" title="Facebook">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" title="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://twitter.com/yourusername" target="_blank" rel="noopener" title="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener" title="YouTube">
+    <i class="fab fa-youtube"></i>
+  </a>
+        </div>
+      <div class="contact-icons" style="font-size: 24px;">
+  <a href="https://www.google.com/maps/place/Stone+Town,+Zanzibar" target="_blank" rel="noopener" title="Location" class="contact-icon">
+    <i class="fas fa-map-marker-alt"></i>
+    </a>
+ <a href="tel:+255 621 214 785" target="_blank" rel="noopener" title="Call" class="contact-icon">
+    <i class="fas fa-phone"></i>
+  </a>
+  <a href="https://wa.me/255621214785" target="_blank" rel="noopener" title="WhatsApp" class="contact-icon">
+<i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="mailto:info@zanzibartourism.com" title="Email">
+    <i class="fas fa-envelope"></i>
+  </a>
+</div>
+        <hr style="border-color: #374151; margin: 2rem 0;">
+        <p class="mb-0" style="opacity: 0.8;">&copy; 2025 Zanzibar Tourism - Where Paradise Lives. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <!-- Bootstrap JS -->
   <script src="Bootstap/js/bootstrap.min.js"></script>
+  
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <!-- Custom JavaScript -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+
+    // Page Loader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('pageLoader').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('pageLoader').style.display = 'none';
+        }, 500);
+      }, 1500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const activityItems = document.querySelectorAll('.activity-item');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter');
+
+        activityItems.forEach(item => {
+          if (filterValue === 'all') {
+            item.style.display = 'block';
+            item.style.animation = 'fadeInUp 0.6s ease forwards';
+          } else {
+            const categories = item.getAttribute('data-category').split(' ');
+            if (categories.includes(filterValue)) {
+              item.style.display = 'block';
+              item.style.animation = 'fadeInUp 0.6s ease forwards';
+            } else {
+              item.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero && window.innerWidth > 768) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+
+    // Card hover effects enhancement
+    const cards = document.querySelectorAll('.activity-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-20px) scale(1.03)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
