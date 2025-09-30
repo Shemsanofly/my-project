@@ -278,6 +278,55 @@
       margin-bottom: 0.5rem;
     }
 
+    /* Enhanced Validation Styles */
+    .form-control.is-valid {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+    }
+
+    .form-control.is-invalid {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+    }
+
+    .valid-feedback {
+      display: none;
+      font-size: 0.875rem;
+      color: #28a745;
+      margin-top: 0.25rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .invalid-feedback {
+      display: none;
+      font-size: 0.875rem;
+      color: #dc3545;
+      margin-top: 0.25rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .form-control.is-valid ~ .valid-feedback {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .form-control.is-invalid ~ .invalid-feedback {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .valid-feedback i, .invalid-feedback i {
+      margin-right: 0.5rem;
+    }
+
     .btn-submit {
       background: var(--sunset-gradient);
       border: none;
@@ -753,14 +802,14 @@
               <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
             </div>
 
-            <form id="contactForm" novalidate>
+            <form id="contactForm" action="submit_contact.php" method="POST" novalidate>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="fullname" placeholder="Full Name" required>
                     <label for="fullname">Full Name *</label>
                     <div class="invalid-feedback"></div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="valid-feedback"></div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -768,7 +817,7 @@
                     <input type="email" class="form-control" id="email" placeholder="Email Address" required>
                     <label for="email">Email Address *</label>
                     <div class="invalid-feedback"></div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="valid-feedback"></div>
                   </div>
                 </div>
               </div>
@@ -779,7 +828,7 @@
                     <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
                     <label for="phone">Phone Number</label>
                     <div class="invalid-feedback"></div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="valid-feedback"></div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -794,7 +843,7 @@
                     </select>
                     <label for="subject">Subject *</label>
                     <div class="invalid-feedback"></div>
-                    <div class="valid-feedback">Looks good!</div>
+                    <div class="valid-feedback"></div>
                   </div>
                 </div>
               </div>
@@ -803,7 +852,7 @@
                 <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px;" required></textarea>
                 <label for="message">Your Message *</label>
                 <div class="invalid-feedback"></div>
-                <div class="valid-feedback">Looks good!</div>
+                <div class="valid-feedback"></div>
               </div>
               
               <button type="submit" class="btn btn-submit" id="submitBtn">
@@ -991,36 +1040,93 @@
       const fieldName = field.id;
       let isValid = true;
       let message = '';
+      let successMessage = '';
 
       // Check if required field is empty
       if (field.hasAttribute('required') && !value) {
         isValid = false;
         message = `${field.labels[0].textContent.replace(' *', '')} is required`;
       } else if (value) {
-        // Validate specific fields
+        // Validate specific fields and create dynamic success messages
         switch (fieldName) {
           case 'fullname':
             if (!patterns.name.test(value)) {
               isValid = false;
               message = messages.name;
+            } else {
+              // Dynamic success messages for name
+              const nameVariations = [
+                `Perfect! Nice to meet you, ${value.split(' ')[0]}!`,
+                `Great name! We'll personalize your Zanzibar experience`,
+                `Excellent! Your name is properly formatted`,
+                `Welcome ${value.split(' ')[0]}! Ready for your adventure?`,
+                `That's a lovely name! Looking forward to helping you`
+              ];
+              successMessage = nameVariations[Math.floor(Math.random() * nameVariations.length)];
             }
             break;
           case 'email':
             if (!patterns.email.test(value)) {
               isValid = false;
               message = messages.email;
+            } else {
+              // Dynamic success messages for email
+              const domain = value.split('@')[1];
+              const emailVariations = [
+                `Perfect email format! We'll send updates to ${domain}`,
+                `Excellent! Your email is verified and ready`,
+                `Great! We can reach you at this address`,
+                `Email confirmed! Expect quick responses`,
+                `Wonderful! Your contact details are secure`
+              ];
+              successMessage = emailVariations[Math.floor(Math.random() * emailVariations.length)];
             }
             break;
           case 'phone':
             if (value && !patterns.phone.test(value)) {
               isValid = false;
               message = messages.phone;
+            } else if (value) {
+              // Dynamic success messages for phone
+              const phoneVariations = [
+                `Great! We can call you for urgent updates`,
+                `Perfect! Phone number format is correct`,
+                `Excellent! Ready for WhatsApp communication`,
+                `Phone verified! We'll keep you informed`,
+                `Nice! Quick contact method confirmed`
+              ];
+              successMessage = phoneVariations[Math.floor(Math.random() * phoneVariations.length)];
+            }
+            break;
+          case 'subject':
+            if (value) {
+              // Dynamic success messages for subject selection
+              const subjectVariations = {
+                'booking': `Perfect! Our booking specialists are ready to help`,
+                'tour': `Excellent choice! Our tour guides have great recommendations`,
+                'accommodation': `Great! We know the best places to stay in Zanzibar`,
+                'activities': `Wonderful! So many exciting activities await you`,
+                'other': `Perfect! We're here to help with any questions`
+              };
+              successMessage = subjectVariations[value] || 'Great selection! We understand your needs';
             }
             break;
           case 'message':
             if (value.length < 10) {
               isValid = false;
               message = messages.message;
+            } else {
+              // Dynamic success messages for message
+              const wordCount = value.split(' ').length;
+              const messageVariations = [
+                `Perfect message! ${wordCount} words give us great detail`,
+                `Excellent! Your request is clear and detailed`,
+                `Great communication! We understand your needs`,
+                `Wonderful message! This helps us serve you better`,
+                `Perfect! Your detailed message helps us prepare`,
+                `Excellent description! We're excited to help you`
+              ];
+              successMessage = messageVariations[Math.floor(Math.random() * messageVariations.length)];
             }
             break;
         }
@@ -1029,12 +1135,14 @@
       // Update field appearance
       field.classList.remove('is-valid', 'is-invalid');
       const feedback = field.parentNode.querySelector('.invalid-feedback');
+      const validFeedback = field.parentNode.querySelector('.valid-feedback');
       
       if (!isValid) {
         field.classList.add('is-invalid');
-        if (feedback) feedback.textContent = message;
+        if (feedback) feedback.innerHTML = `<i class="fas fa-exclamation-circle"></i>${message}`;
       } else if (value) {
         field.classList.add('is-valid');
+        if (validFeedback) validFeedback.innerHTML = `<i class="fas fa-check-circle"></i>${successMessage}`;
       }
 
       return isValid;
@@ -1057,47 +1165,67 @@
     // Form submission
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      
       // Validate all fields
       const fields = form.querySelectorAll('input[required], select[required], textarea[required]');
       let isFormValid = true;
-      
       fields.forEach(field => {
         if (!validateField(field)) {
           isFormValid = false;
         }
       });
-
       if (isFormValid) {
         // Show loading state
         const btnText = submitBtn.querySelector('.btn-text');
         const btnLoading = submitBtn.querySelector('.btn-loading');
-        
         btnText.style.display = 'none';
         btnLoading.style.display = 'inline-flex';
         submitBtn.disabled = true;
 
-        // Simulate form submission
-        setTimeout(() => {
+        // Prepare form data
+        const formData = new FormData(form);
+        // Map field IDs to PHP expected names
+        formData.set('name', form.fullname.value);
+        formData.set('email', form.email.value);
+        formData.set('message', form.message.value);
+
+        // Send AJAX request
+        fetch('submit_contact.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
           // Hide loading state
           btnText.style.display = 'inline-flex';
           btnLoading.style.display = 'none';
           submitBtn.disabled = false;
 
-          // Show success message
+          // Show success or error message
+          successMessage.querySelector('h4').textContent = data.includes('Thank you') ? 'Message Sent Successfully!' : 'Submission Error';
+          successMessage.querySelector('p').textContent = data;
           successMessage.classList.add('show');
-          form.reset();
-          
-          // Clear validation classes
-          fields.forEach(field => {
-            field.classList.remove('is-valid', 'is-invalid');
-          });
-
-          // Hide success message after 5 seconds
+          if (data.includes('Thank you')) {
+            form.reset();
+            fields.forEach(field => {
+              field.classList.remove('is-valid', 'is-invalid');
+            });
+          }
+          // Hide message after 5 seconds
           setTimeout(() => {
             successMessage.classList.remove('show');
           }, 5000);
-        }, 2000);
+        })
+        .catch(() => {
+          btnText.style.display = 'inline-flex';
+          btnLoading.style.display = 'none';
+          submitBtn.disabled = false;
+          successMessage.querySelector('h4').textContent = 'Submission Error';
+          successMessage.querySelector('p').textContent = 'There was a problem submitting your message. Please try again.';
+          successMessage.classList.add('show');
+          setTimeout(() => {
+            successMessage.classList.remove('show');
+          }, 5000);
+        });
       } else {
         // Focus on first invalid field
         const firstInvalid = form.querySelector('.is-invalid');
