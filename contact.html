@@ -806,7 +806,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" required>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name" required>
                     <label for="fullname">Full Name *</label>
                     <div class="invalid-feedback"></div>
                     <div class="valid-feedback"></div>
@@ -814,7 +814,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
                     <label for="email">Email Address *</label>
                     <div class="invalid-feedback"></div>
                     <div class="valid-feedback"></div>
@@ -825,7 +825,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-floating mb-3">
-                    <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number">
                     <label for="phone">Phone Number</label>
                     <div class="invalid-feedback"></div>
                     <div class="valid-feedback"></div>
@@ -833,7 +833,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating mb-3">
-                    <select class="form-control" id="subject" required>
+                    <select class="form-control" id="subject" name="subject" required>
                       <option value="">Choose a subject</option>
                       <option value="booking">Booking Inquiry</option>
                       <option value="tour">Tour Information</option>
@@ -849,7 +849,7 @@
               </div>
               
               <div class="form-floating mb-4">
-                <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px;" required></textarea>
+                <textarea class="form-control" id="message" name="message" placeholder="Your Message" style="height: 150px;" required></textarea>
                 <label for="message">Your Message *</label>
                 <div class="invalid-feedback"></div>
                 <div class="valid-feedback"></div>
@@ -1181,50 +1181,80 @@
         btnLoading.style.display = 'inline-flex';
         submitBtn.disabled = true;
 
-        // Prepare form data
-        const formData = new FormData(form);
-        // Map field IDs to PHP expected names
-        formData.set('name', form.fullname.value);
-        formData.set('email', form.email.value);
-        formData.set('message', form.message.value);
+        // Prepare form data with correct field names
+        const formData = new FormData();
+        formData.set('fullname', form.fullname.value.trim());
+        formData.set('email', form.email.value.trim());
+        formData.set('phone', form.phone.value.trim());
+        formData.set('subject', form.subject.value.trim());
+        formData.set('message', form.message.value.trim());
 
         // Send AJAX request
         fetch('submit_contact.php', {
           method: 'POST',
           body: formData
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
           // Hide loading state
           btnText.style.display = 'inline-flex';
           btnLoading.style.display = 'none';
           submitBtn.disabled = false;
 
-          // Show success or error message
-          successMessage.querySelector('h4').textContent = data.includes('Thank you') ? 'Message Sent Successfully!' : 'Submission Error';
-          successMessage.querySelector('p').textContent = data;
-          successMessage.classList.add('show');
-          if (data.includes('Thank you')) {
+          if (data.success) {
+            // Show success message
+            successMessage.querySelector('h4').textContent = 'Message Sent Successfully!';
+            successMessage.querySelector('p').textContent = data.message;
+            successMessage.classList.add('show');
+            
+            // Reset form and validation states
             form.reset();
             fields.forEach(field => {
               field.classList.remove('is-valid', 'is-invalid');
             });
+            
+            // Hide message after 6 seconds
+            setTimeout(() => {
+              successMessage.classList.remove('show');
+            }, 6000);
+          } else {
+            // Show error message
+            successMessage.querySelector('h4').textContent = 'Submission Error';
+            successMessage.querySelector('p').textContent = data.message;
+            successMessage.classList.add('show');
+            
+            // Handle field-specific errors
+            if (data.errors) {
+              Object.keys(data.errors).forEach(fieldName => {
+                const field = form.querySelector(`#${fieldName}`);
+                if (field) {
+                  field.classList.add('is-invalid');
+                  field.classList.remove('is-valid');
+                  const feedback = field.parentElement.querySelector('.invalid-feedback');
+                  if (feedback) {
+                    feedback.textContent = data.errors[fieldName];
+                  }
+                }
+              });
+            }
+            
+            // Hide message after 8 seconds
+            setTimeout(() => {
+              successMessage.classList.remove('show');
+            }, 8000);
           }
-          // Hide message after 5 seconds
-          setTimeout(() => {
-            successMessage.classList.remove('show');
-          }, 5000);
         })
-        .catch(() => {
+        .catch(error => {
+          console.error('Network error:', error);
           btnText.style.display = 'inline-flex';
           btnLoading.style.display = 'none';
           submitBtn.disabled = false;
-          successMessage.querySelector('h4').textContent = 'Submission Error';
-          successMessage.querySelector('p').textContent = 'There was a problem submitting your message. Please try again.';
+          successMessage.querySelector('h4').textContent = 'Connection Error';
+          successMessage.querySelector('p').textContent = 'There was a problem connecting to the server. Please check your internet connection and try again.';
           successMessage.classList.add('show');
           setTimeout(() => {
             successMessage.classList.remove('show');
-          }, 5000);
+          }, 8000);
         });
       } else {
         // Focus on first invalid field
