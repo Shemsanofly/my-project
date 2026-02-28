@@ -1,3 +1,11 @@
 .DS_Store
 node_modules/
 *.log
+
+# Rails / backend
+ghalarails_api/.env
+ghalarails_api/tmp/
+ghalarails_api/log/
+ghalarails_api/storage/
+ghalarails_api/vendor/bundle/
+ghalarails_api/.bundle/
